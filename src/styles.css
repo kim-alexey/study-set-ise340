@@ -36,6 +36,21 @@
   }
 }
 
+html.dark {
+  --color-paper: #1a1814;
+  --color-sheet: #24211c;
+  --color-ink: #f3efe6;
+  --color-muted: #b8b0a4;
+  --color-line: #3a352e;
+  --color-stamp: #c45a54;
+  --color-stamp-ink: #fff7f4;
+  --color-good: #4ade80;
+  --color-good-soft: #163d28;
+  --color-bad: #f87171;
+  --color-bad-soft: #3d1a1a;
+  --color-mark: #d4b483;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

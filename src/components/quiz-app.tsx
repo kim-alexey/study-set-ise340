@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, BookOpen, RotateCcw, Shuffle } from "lucide-react";
+import { ArrowRight, BookOpen, Moon, RotateCcw, Shuffle, Sun } from "lucide-react";
 import {
   QUESTIONS,
   questionById,
@@ -27,6 +27,7 @@ type Memory = {
 
 const MEMORY_KEY = "ise340-memory-v1";
 const SESSION_KEY = "ise340-session-v1";
+const THEME_KEY = "ise340-theme";
 
 const emptyMemory = (): Memory => ({ everCorrect: [], stillMissed: [] });
 
@@ -278,13 +279,16 @@ export function QuizApp() {
             {session.label} · {session.mode === "learn" ? "Learn" : "Exam"}
           </p>
         </div>
-        <button
-          type="button"
-          onClick={quit}
-          className="min-h-11 rounded-full border border-line bg-sheet px-4 text-sm font-medium text-ink"
-        >
-          End
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={quit}
+            className="min-h-11 rounded-full border border-line bg-sheet px-4 text-sm font-medium text-ink"
+          >
+            End
+          </button>
+        </div>
       </header>
 
       <div className="mb-6">
@@ -384,7 +388,10 @@ function Home({
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-8 sm:px-6 sm:py-14">
-      <p className="text-xs font-semibold tracking-widest text-stamp uppercase">Stony Brook · ISE 340</p>
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-xs font-semibold tracking-widest text-stamp uppercase">Stony Brook · ISE 340</p>
+        <ThemeToggle />
+      </div>
       <h1 className="mt-3 max-w-xl font-serif text-4xl leading-tight font-medium text-ink sm:text-5xl">
         Class questions, shuffled. Same wording as the packet.
       </h1>
@@ -490,7 +497,10 @@ function Results({
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-8 sm:px-6 sm:py-12">
-      <p className="text-xs font-semibold tracking-widest text-stamp uppercase">Results · {session.label}</p>
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-xs font-semibold tracking-widest text-stamp uppercase">Results · {session.label}</p>
+        <ThemeToggle />
+      </div>
       <h1 className="mt-3 font-serif text-4xl leading-tight font-medium text-ink">
         {correct} / {rows.length}
       </h1>
@@ -555,6 +565,33 @@ function Results({
         ))}
       </ul>
     </main>
+  );
+}
+
+
+function ThemeToggle() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    setDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  function toggle() {
+    const next = !document.documentElement.classList.contains("dark");
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem(THEME_KEY, next ? "dark" : "light");
+    setDark(next);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full border border-line bg-sheet text-ink"
+    >
+      {dark ? <Sun className="size-4" aria-hidden="true" /> : <Moon className="size-4" aria-hidden="true" />}
+    </button>
   );
 }
 

@@ -5,6 +5,8 @@ import appCss from "../styles.css?url";
 
 const APP_NAME = "ISE 340 Exam Drill";
 
+const themeBoot = `try{if(localStorage.getItem("ise340-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}`;
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -31,6 +33,7 @@ export const Route = createRootRoute({
   component: () => (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
         <HeadContent />
       </head>
       <body>

@@ -588,9 +588,10 @@ function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-      className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full border border-line bg-sheet text-ink"
+      className="inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full border border-line bg-sheet px-3 text-ink"
     >
       {dark ? <Sun className="size-4" aria-hidden="true" /> : <Moon className="size-4" aria-hidden="true" />}
+      <span className="pr-1 text-sm font-medium">{dark ? "Light" : "Dark"}</span>
     </button>
   );
 }
